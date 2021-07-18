@@ -1,4 +1,4 @@
-module linkedlist
+module learn/go-algorithms
 
 go 1.16
 
