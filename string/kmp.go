@@ -42,7 +42,7 @@ func Search(text string, word string) Result {
 }
 
 // 计算返回 word 的 next 数组
-func GetNext(word string) (next []int){
+func kmpTable(word string) (next []int){
 	next = make([]int, len(word))
 	next[0] = 0                  	// next[0] 必然是 0
 	x, now := 1, 0             		// 因此从 next[1] 开始求

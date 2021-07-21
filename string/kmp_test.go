@@ -6,9 +6,9 @@ import (
     . "github.com/smartystreets/goconvey/convey"
 )
 
-func TestGetNext(t *testing.T)  {
-    Convey("#GetNext", t, func() {
-        next := GetNext("ababaaaba")
+func TestKmpTable(t *testing.T)  {
+    Convey("#kmpTable", t, func() {
+        next := kmpTable("ABCABD")
         // So(s.GetTop(), ShouldEqual, 6)
         fmt.Println(next)
     })
