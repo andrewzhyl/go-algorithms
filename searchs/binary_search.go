@@ -34,6 +34,7 @@ func IterBinarySearch(array []int, key int, low int, high int) int {
 	} 
 }
 
+// 插值查找
 func InterpolationSearch(array []int, key int) int {
 	low := 0
 	high := len(array) -1
