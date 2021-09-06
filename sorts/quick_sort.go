@@ -1,15 +1,13 @@
 package sorts
 
-import(
-	// "fmt"
-)
+// "fmt"
 
 // 快速排序
 func QuickSort(items []int, low int, high int) {
 	var pivot int
 	for low < high {
-		pivot = Partition(items, low, high)   // 算出枢轴值 pivot
-		QuickSort(items, low, pivot - 1)          // 对低子表递归排序
+		pivot = Partition(items, low, high) // 算出枢轴值 pivot
+		QuickSort(items, low, pivot-1)      // 对低子表递归排序
 		// QuickSort(items, pivot + 1, high)		 // 对高子表递归排序
 		low = pivot + 1
 	}
@@ -18,7 +16,7 @@ func QuickSort(items []int, low int, high int) {
 // 交换顺序表中的记录，使枢轴记录到位，并返回其所在位置
 func Partition(items []int, low int, high int) int {
 	var pivotkey int
-	pivotkey = items[low]      // 用子表的第一个记录作为枢轴值
+	pivotkey = items[low] // 用子表的第一个记录作为枢轴值
 	temp := pivotkey
 	for low < high {
 		for low < high && items[high] >= pivotkey {
@@ -33,12 +31,5 @@ func Partition(items []int, low int, high int) int {
 		items[high] = items[low]
 	}
 	items[low] = temp
-	return low                 // 返回枢轴位置
-}
-
-// 交换
-func swap(array []int, i int, j int){
-	temp := array[i]
-	array[i] = array[j]
-	array[j] = temp
+	return low // 返回枢轴位置
 }
