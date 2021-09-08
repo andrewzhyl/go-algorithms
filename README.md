@@ -23,6 +23,7 @@
   - threaded_binary_tree 线索化二叉树
   - segment_tree 线段树
   - trie 字典树
+  - unionfind 并查集
 - map
   - btsmap 二叉查找树map
   - triemap 字典树map
