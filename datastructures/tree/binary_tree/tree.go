@@ -2,61 +2,61 @@ package binarytree
 
 import (
 	"fmt"
-	"reflect"
+	"strings"
 )
 
-type BinaryTreeNode struct {
+type Node struct {
 	val   interface{}
-	left  *BinaryTreeNode
-	right *BinaryTreeNode
+	left  *Node
+	right *Node
 }
 
-type BinaryTree struct {
-	Root *BinaryTreeNode
+type Tree struct {
+	Root *Node
 }
 
-func NewBinaryTreeNode(val interface{}) *BinaryTreeNode {
-	return &BinaryTreeNode{val, nil, nil}
+func NewNode(val interface{}) *Node {
+	return &Node{val, nil, nil}
 }
 
-func NewTree() *BinaryTree {
-	return &BinaryTree{nil}
+func NewTree() *Tree {
+	return &Tree{nil}
 }
 
-func (t *BinaryTree) Insert(val interface{}) *BinaryTree {
+func (t *Tree) Insert(val interface{}) *Tree {
 	if t.Root == nil {
-		t.Root = NewBinaryTreeNode(val)
+		t.Root = NewNode(val)
 	} else {
 		t.Root.Insert(val)
 	}
 	return t
 }
 
-func (n *BinaryTreeNode) Insert(val interface{}) {
-	if n == nil {
+func (node *Node) Insert(val interface{}) {
+	if node == nil {
 		return
 	}
-	var terminalBinaryTreeNode *BinaryTreeNode
-	for n != nil {
-		terminalBinaryTreeNode = n
-		if int(val.(int)) <= int(n.val.(int)) {
-			n = n.left
+	var cur *Node
+	for node != nil {
+		cur = node
+		if compare(val, node.val) <= 0 {
+			node = node.left
 		} else {
-			n = n.right
+			node = node.right
 		}
 	}
 
-	if int(val.(int)) <= int(terminalBinaryTreeNode.val.(int)) {
-		terminalBinaryTreeNode.left = NewBinaryTreeNode(val)
+	if compare(val, cur.val) <= 0 {
+		cur.left = NewNode(val)
 	} else {
-		terminalBinaryTreeNode.right = NewBinaryTreeNode(val)
+		cur.right = NewNode(val)
 	}
 	return
 }
 
 // 前序遍历递归
-func (n *BinaryTreeNode) PreOrderTraverse() {
-	fmt.Print(" -> ", n.val)
+func (n *Node) PreOrderTraverse() {
+	fmt.Printf(" -> %s", convertToString(n.val))
 	if n.left != nil {
 		n.left.PreOrderTraverse()
 	}
@@ -66,7 +66,7 @@ func (n *BinaryTreeNode) PreOrderTraverse() {
 }
 
 // 前序遍历查找
-func (b *BinaryTree) PreOrderSearch(n *BinaryTreeNode, val interface{}) interface{} {
+func (b *Tree) PreOrderSearch(n *Node, val interface{}) interface{} {
 	if n == nil {
 		return nil
 	}
@@ -90,34 +90,34 @@ func (b *BinaryTree) PreOrderSearch(n *BinaryTreeNode, val interface{}) interfac
 }
 
 // 前序遍历打印
-func PreOrder(n *BinaryTreeNode, ns int, ch rune) {
+func PreOrder(n *Node, ns int, ch rune) {
 	if n == nil {
 		return
 	}
 	for i := 0; i < ns; i++ {
 		fmt.Print(" ")
 	}
-	fmt.Printf("%c:%v\n", ch, n.val)
+	fmt.Printf("%c:%s\n", ch, convertToString(n.val))
 	PreOrder(n.left, ns+2, 'L')
 	PreOrder(n.right, ns+2, 'R')
 }
 
 // 中序遍历递归
-func (n *BinaryTreeNode) InOrderTraverse() {
+func (n *Node) InOrderTraverse() {
 	if n == nil {
 		return
 	}
 	if n.left != nil {
 		n.left.InOrderTraverse()
 	}
-	fmt.Print(" -> ", n.val)
+	fmt.Printf(" -> %s", convertToString(n.val))
 	if n.right != nil {
 		n.right.InOrderTraverse()
 	}
 }
 
 // 中序遍历查找
-func (n *BinaryTreeNode) InOrderSearch(val interface{}) interface{} {
+func (n *Node) InOrderSearch(val interface{}) interface{} {
 	if n.left != nil {
 		l1 := n.left.InOrderSearch(val)
 		if l1 != nil {
@@ -137,7 +137,7 @@ func (n *BinaryTreeNode) InOrderSearch(val interface{}) interface{} {
 }
 
 // 后续遍历递归
-func (n *BinaryTreeNode) PostOrderTraverse() {
+func (n *Node) PostOrderTraverse() {
 	if n == nil {
 		return
 	}
@@ -147,11 +147,11 @@ func (n *BinaryTreeNode) PostOrderTraverse() {
 	if n.right != nil {
 		n.right.PostOrderTraverse()
 	}
-	fmt.Print(" -> ", n.val)
+	fmt.Printf(" -> %s", convertToString(n.val))
 }
 
 // 后序遍历查找
-func (n *BinaryTreeNode) PostOrderSearch(val interface{}) interface{} {
+func (n *Node) PostOrderSearch(val interface{}) interface{} {
 	if n.left != nil {
 		l1 := n.left.PostOrderSearch(val)
 		if l1 != nil {
@@ -170,16 +170,40 @@ func (n *BinaryTreeNode) PostOrderSearch(val interface{}) interface{} {
 	}
 	return nil
 }
-
-func I2num(val interface{}) int { // interface to number
-	var i int
-	switch val.(type) {
+func compare(a, b interface{}) int {
+	switch a.(type) {
 	case string:
-		i = int(reflect.ValueOf(val).String()[0])
+		return strings.Compare(a.(string), b.(string))
 	case int32:
-		i = int(val.(int32))
+		return func(a, b int32) int {
+			if a == b {
+				return 0
+			}
+			if a < b {
+				return -1
+			}
+			return +1
+		}(a.(int32), b.(int32))
 	default:
-		i = int(val.(int))
+		return func(a, b int) int {
+			if a == b {
+				return 0
+			}
+			if a < b {
+				return -1
+			}
+			return +1
+		}(a.(int), b.(int))
 	}
-	return i
+}
+
+func convertToString(a interface{}) string {
+	switch a.(type) {
+	case string:
+		return a.(string)
+	case rune:
+		return fmt.Sprintf("%c", a)
+	default:
+		return fmt.Sprintf("%d", a)
+	}
 }

@@ -3,20 +3,21 @@
 ## List of Algorithms
 
 - linkedlist
-  - array_singlylinkedlist： 数组
-  - singlylinkedlist： 链式
+  - array_singlylinkedlist： 数组存储链表
+  - singlylinkedlist： 链式存储链表
   - doublylinkedlist： 双向链表
 - queue
-  - array_queue 数组
-  - queue 链式
+  - array_queue 数组存储队列
+  - queue 链式存储队列
   - loop_queue 循环队列
 - stack
-  - array_stack 数组
-  - stack 链式
+  - array_stack 数组存储栈
+  - stack 链式存储栈
 - heap 大顶堆
 - string  
   - KMP 算法
 - tree
+  - avltree 平衡二叉树
   - binary_tree 二叉树
   - bst 二叉查找树
   - huffman_tree 哈夫曼树
@@ -27,15 +28,16 @@
 - map
   - btsmap 二叉查找树map
   - triemap 字典树map
+  - hashtable 哈希表(链表)
 - 查找
-  - 二分查找
-  - 二分递归查找
-  - 插值查找
-  - 斐波那契数列查找
+  - binary_search 二分查找
+  - binary_sort_tree 二叉查找树
+  - fibonacci_search 斐波那契数列查找
 - 排序
-  - 冒泡排序
-  - 插入排序
-  - 选择排序
-  - 希尔排序
-  - 堆排序
-  - 归并排序
+  - bubble_sort 冒泡排序
+  - insertion_sort 插入排序
+  - selection_sort 选择排序
+  - shell_sort 希尔排序
+  - heap_sort 堆排序
+  - merging_sort 归并排序
+  - quick_sort 快排
